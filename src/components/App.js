@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import "./App.css";
 import ProductView from "./ProductView";
 import BasketView from "./BasketView";
-//import ProductsSorting from "./ProductsSorting";
 
 class App extends Component {
   state = {
