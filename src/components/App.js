@@ -64,7 +64,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const API = "https://private-1c19e-reactlesson.apiary-mock.com/products";
+    const API = "http://private-1c19e-reactlesson.apiary-mock.com/products";
     fetch(API)
       .then(response => {
         if (response.status >= 400) {
