@@ -2,25 +2,36 @@ import React, { Component } from "react";
 import "./App.css";
 import ProductView from "./ProductView";
 import BasketView from "./BasketView";
-//import ProductsSorting from "./ProductsSorting";
 
 class App extends Component {
   state = {
     productsArray: [],
     basketArray: [],
     totalprice: 0,
+    deleteprice: 0,
     value: '',
   };
 
   deleteItem = (id) => {
+
     let newBasketArray = [...this.state.basketArray];
     newBasketArray = newBasketArray.filter(el => el.id !== id)
-    console.log(newBasketArray);
+
+    let newPrice = [...this.state.basketArray];
+    newPrice.forEach(product => {
+      if(product.id === id) {
+        this.setState({
+          deleteprice: product.price,
+          totalprice: this.state.totalprice - this.state.deleteprice,
+        }) 
+      }
+    })
+
     this.setState({
-    basketArray: newBasketArray
+    basketArray: newBasketArray,
     })
   }
-
+  
   addItem = (item) => {
     let price = parseFloat(item.price);
 
@@ -64,7 +75,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    const API = "http://private-1c19e-reactlesson.apiary-mock.com/products";
+    const API = "https://private-1c19e-reactlesson.apiary-mock.com/products";
     fetch(API)
       .then(response => {
         if (response.status >= 400) {

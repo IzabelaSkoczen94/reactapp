@@ -11,7 +11,7 @@ class BasketView extends React.Component {
             <div key={item.id + 10}>
               <ul className="user-cart--list">
                 <li>
-                  <button key={item.id} onClick={() => this.props.deleteItem(item.id)}>x</button>
+                  <button key={item.id} onClick={() => this.props.deleteItem(item.id, item.price)}>x</button>
                   {item.id - 1} - {item.name} - {item.price} zl
                 </li>
               </ul>
