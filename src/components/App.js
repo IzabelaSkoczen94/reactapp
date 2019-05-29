@@ -71,8 +71,6 @@ class App extends Component {
         this.setState({ productsArray: data });
       });
   }
-
-  //cena calkowita 
   getTotalPrice = () => {
     return sumBy(this.state.basketArray, 'price')
   }
