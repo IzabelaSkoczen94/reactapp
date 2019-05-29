@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import "./App.css";
+import { sumBy } from 'lodash'
 import ProductView from "./ProductView";
 import BasketView from "./BasketView";
 
@@ -7,41 +8,24 @@ class App extends Component {
   state = {
     productsArray: [],
     basketArray: [],
-    totalprice: 0,
-    deleteprice: 0,
     value: '',
   };
 
   deleteItem = (id) => {
-
     let newBasketArray = [...this.state.basketArray];
     newBasketArray = newBasketArray.filter(el => el.id !== id)
-
-    let newPrice = [...this.state.basketArray];
-    newPrice.forEach(product => {
-      if(product.id === id) {
-        this.setState({
-          deleteprice: product.price,
-          totalprice: this.state.totalprice - this.state.deleteprice,
-        }) 
-      }
-    })
-
     this.setState({
     basketArray: newBasketArray,
     })
   }
   
   addItem = (item) => {
-    let price = parseFloat(item.price);
-
     if (this.state.basketArray.includes(item)) {
       alert("Wybrany produkt jest juz w koszyku");
     }
     else {
       this.setState(prevState => ({
         basketArray: [...prevState.basketArray, item],
-        totalprice: this.state.totalprice + price
       }));     
     }
   }
@@ -88,6 +72,11 @@ class App extends Component {
       });
   }
 
+  //cena calkowita 
+  getTotalPrice = () => {
+    return sumBy(this.state.basketArray, 'price')
+  }
+
   render() {
     const items = this.state.productsArray;
     const products = this.state.basketArray;
@@ -117,7 +106,7 @@ class App extends Component {
             <section className="user-cart">
               <h4>Twój koszyk</h4>
               <BasketView products={products} deleteItem={this.deleteItem}  />
-              <section className="total-price">{this.state.totalprice} zł</section>
+              <section className="total-price">{this.getTotalPrice()} zł</section>
             </section>
           </div>
           <footer className="footer">Copyright by my-shop - 2018</footer>
